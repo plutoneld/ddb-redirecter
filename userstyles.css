@@ -1,0 +1,67 @@
+/* Removes top row with logo, search box, social media buttons and user buttons when browsing compendiums - is restored on other pages with JavaScript*/
+div.site-bar {
+  display: none;
+}
+
+/* Removes top menu bar when browsing compendiums - is restored on other pages with JavaScript*/
+nav.main {
+  display: none;
+}
+
+/* Removes mobile menu when browsing compendiums */
+header.main {
+  display: none!important;
+}
+
+/* Move up background to compensate for removing nav and site-bar */
+body.site {
+  background-position: top;
+}
+
+/* Remove Breadcrumbs in compendiums*/
+nav.b-breadcrumb {
+  display: none;
+}
+
+/* Makes the "Back to Compendium" button move down */
+div.compendium-quick-actions {
+  top: 0px;
+}
+
+/* Removes social buttons */
+div.site-interactions-group-social {
+  display: none;
+}
+
+/* Removes user buttons */
+div.site-interactions-group-user {
+  display: none;
+}
+
+/* Remove Footer on all pages*/
+div.ddb-footer {
+  display: none;
+}
+
+/* Floating app-menu */
+div.electron-floating-menu {
+  background-color: rgb(24, 25, 27);
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 1.25em;
+  color: #e30712;
+  border-radius: 0px 10px 10px 0px;
+  opacity: 0.0;
+  padding: 5px;
+  z-index: 5000;
+  position: fixed;
+  bottom:5px;
+}
+
+div.electron-floating-menu a {
+  color: #a5aeb9 ;
+  text-decoration: none;
+}
+
+div.electron-floating-menu a:hover {
+  color: #fff;
+}
