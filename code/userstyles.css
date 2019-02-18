@@ -44,24 +44,31 @@ div.ddb-footer {
 }
 
 /* Floating app-menu */
-div.electron-floating-menu {
-  background-color: rgb(24, 25, 27);
-  font-family: 'Fredericka the Great', cursive;
-  font-size: 1.25em;
-  color: #e30712;
-  border-radius: 0px 10px 10px 0px;
-  opacity: 0.0;
+div.myFloatingMenu {
+  background-color: rgb(255, 255, 220);
+  border-radius: 5px 5px 5px 5px;
   padding: 5px;
   z-index: 5000;
   position: fixed;
-  bottom:5px;
+  border: 1px solid rgb(209, 71, 71);
+  top: 10%;
+  left: 15%;
+  max-height: 80%;
+  line-height: 1.75em;
+  width: 70%;
+  overflow: auto;
+  display: none;
+  column-count: 3;
 }
 
-div.electron-floating-menu a {
-  color: #a5aeb9 ;
-  text-decoration: none;
+div.myFloatingMenu a:hover {
+  color:white;
 }
 
-div.electron-floating-menu a:hover {
-  color: #fff;
+.myIntroButton {
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: bold;
+  margin: 0px 40% 10px 40%;
+  border-radius: 5px 5px 5px 5px;
 }
