@@ -1,3 +1,8 @@
+/*
+	Compendium Menu is toggled by pressing the M key.
+	
+	If you want to disable it entirely, change the below 'true' to 'false'
+*/
 if (true) {
 	/* Create the floating menu div*/
 	var myFloatingMenu = document.createElement("DIV");
