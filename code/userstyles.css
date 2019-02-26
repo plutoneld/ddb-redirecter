@@ -4,7 +4,7 @@ div.site-bar {
 }
 
 /* Removes top menu bar */
-nav.main {
+#mega-menu-target {
   display: none;
 }
 
