@@ -23,52 +23,7 @@ nav.b-breadcrumb {
   display: none;
 }
 
-/* Makes the "Back to Compendium" button move down */
-div.compendium-quick-actions {
-  top: 0px;
-}
-
-/* Removes social buttons */
-div.site-interactions-group-social {
-  display: none;
-}
-
-/* Removes user buttons */
-div.site-interactions-group-user {
-  display: none;
-}
-
 /* Remove Footer on all pages */
 div.ddb-footer {
   display: none;
-}
-
-/* Floating menu for compendiums */
-div.myFloatingMenu {
-  background-color: rgb(255, 255, 220);
-  border-radius: 5px 5px 5px 5px;
-  padding: 5px;
-  z-index: 5000;
-  position: fixed;
-  border: 1px solid rgb(209, 71, 71);
-  top: 10%;
-  left: 15%;
-  max-height: 80%;
-  line-height: 1.75em;
-  width: 70%;
-  overflow: auto;
-  display: none;
-  column-count: 3;
-}
-
-div.myFloatingMenu a:hover {
-  color:white;
-}
-
-.myIntroButton {
-  font-size: 1.2em;
-  text-align: center;
-  font-weight: bold;
-  margin: 0px 40% 10px 40%;
-  border-radius: 5px 5px 5px 5px;
 }
