@@ -1,3 +1,5 @@
+//URL: www.dndbeyond.com/profile/*/characters/
+
 function widthMediaQuery(x) {
 	if (x.matches) { // If media query matches
 		document.getElementsByClassName("body-rpgcharacter-sheet")[0].style.backgroundPosition = "center 116px";
