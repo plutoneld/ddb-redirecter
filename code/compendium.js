@@ -1,5 +1,6 @@
+//URL: www.dndbeyond.com/compendium
 /*
-	Compendium Menu is toggled by pressing the M key.
+	Compendium Menu is toggled by pressing the T key.
 	
 	If you want to disable it entirely, change the below 'true' to 'false'
 */
@@ -67,7 +68,7 @@ if (true) {
 	document.addEventListener("keypress", showMenuFunction);
 
 	function showMenuFunction(myKeyEvent){
-		if (myKeyEvent.key == "m" || myKeyEvent.key == "M") {
+		if (myKeyEvent.key == "t" || myKeyEvent.key == "T") {
 			var display = document.getElementsByClassName("myFloatingMenu")[0].style.display;
 			if (display == "none") {
 				if (sessionStorage.menuTocList == "true") 
