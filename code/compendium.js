@@ -1,4 +1,5 @@
-//URL: www.dndbeyond.com/compendium
+//URL: www.dndbeyond.com/sources
+
 /*
 	Compendium Menu is toggled by pressing the T key.
 	
