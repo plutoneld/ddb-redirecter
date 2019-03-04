@@ -89,7 +89,7 @@ if (true) {
 			}
 	}
 	
-	var x = window.matchMedia("(min-width: 800px)")
-	changeColumnsFunction(x)
-	x.addListener(changeColumnsFunction)
+	var x = window.matchMedia("(min-width: 800px)");
+	changeColumnsFunction(x);
+	x.addListener(changeColumnsFunction);
 }
