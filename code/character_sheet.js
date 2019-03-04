@@ -12,7 +12,6 @@ function widthMediaQuery(x) {
 		}, 2000);
 	} else if (window.matchMedia("(max-width: 767px)").matches) {
 		window.setTimeout(function() {
-			alert("hej");
 			document.getElementsByClassName("ct-character-sheet-mobile__header")[0].style.top = "0px";
 			document.getElementById("site-main").style.paddingTop = "0px";
 		}, 2000);	
