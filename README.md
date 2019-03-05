@@ -1,5 +1,5 @@
 # Minimalistic D&D Beyond
-Using the instructions, you can have a minimalistic experience of the D&amp;D Beyond website and the digital 5e compendiums. If you want a desktop app for your PC/Mac, you can use the instructions for building a native app with Nativefier.
+Using the instructions, you can have a minimalistic experience of the D&amp;D Beyond website and the digital 5e compendiums.
 
 There's also instructions for getting a minimalistic experience using your current Chrome browser (either on PC/Mac or Chrome OS).
 
