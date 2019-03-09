@@ -8,11 +8,6 @@ div.site-bar {
   display: none;
 }
 
-/* Removes mobile menu when browsing compendiums */
-header.main {
-  display: none!important;
-}
-
 /* Move up background to compensate for removing nav and site-bar */
 body.site {
   background-position: top;
@@ -27,3 +22,13 @@ nav.b-breadcrumb {
 div.ddb-footer {
   display: none;
 }
+
+/* Removes social buttons
+div.site-interactions-group-social {
+  display: none;
+}*/
+
+/* Removes user buttons
+div.site-interactions-group-user {
+  display: none;
+}*/
