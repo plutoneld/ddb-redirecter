@@ -23,6 +23,10 @@ div.ddb-footer {
   display: none;
 }
 
+body {
+	display: none;
+}
+
 /* Removes social buttons
 div.site-interactions-group-social {
   display: none;
