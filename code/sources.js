@@ -6,121 +6,160 @@
 	M = Menus
 	B = Breadcrumbs in Compendiums
 	F = Footer
+	D = Dark mode
 
 */
 
 //Set session storage variables to control show/hide for elements between page changes
-if (sessionStorage.getItem("sitebar") === null)
+if (sessionStorage.sitebar === null)
 	sessionStorage.sitebar = "no";
-if (sessionStorage.getItem("menus") === null)
+if (sessionStorage.menus === null)
 	sessionStorage.menus = "no";
-if (sessionStorage.getItem("breadcrumbs") === null)
+if (sessionStorage.breadcrumbs === null)
 	sessionStorage.breadcrumbs = "no";
-if (sessionStorage.getItem("footer") === null)
+if (sessionStorage.footer === null)
 	sessionStorage.footer = "no";
+if (sessionStorage.darkmode === null)
+	sessionStorage.darkmode = "no";
 	
 //Window size variable, used to control CSS media rules
 var x = window.matchMedia("screen and (max-width: 1023px)");
-
 
 // Check if breadcrumbs are available on current page and set state
 var breadcrumbsOnPage = false;
 if (!(typeof document.getElementsByClassName("b-breadcrumb")[0] === 'undefined')) {
 	breadcrumbsOnPage = true;
-
-	if (sessionStorage.breadcrumbs == "no")
-		document.getElementsByClassName("b-breadcrumb")[0].style.display = "none";
-	else
-		document.getElementsByClassName("b-breadcrumb")[0].style.display = "block";
 } 
 
-// Set state of site bar
-if (sessionStorage.sitebar == "no") {
-	document.getElementsByClassName("site-bar")[0].style.display = "none";
-	changeMobileMenuFunction(x);
-} else {
-	document.getElementsByClassName("site-bar")[0].style.display = "block";
-	if (x.matches) {
-		document.getElementsByTagName("header")[0].style.display = "block";
-		document.getElementById("site-main").style.paddingTop = "47px";
-	}
-}
+// Set states
+darkMode(false);
+siteBar(false);
+footer(false);
+megaMenus(false);
+breadcrumbs(false);
 
-// Set state of footer
-if (sessionStorage.footer == "no")
-	document.getElementsByClassName("ddb-footer")[0].style.display = "none";
-else
-	document.getElementsByClassName("ddb-footer")[0].style.display = "flex";
-
-// Set state of menus
-if (sessionStorage.menus == "no")
-	document.getElementById("mega-menu-target").style.display = "none";
-else
-	document.getElementById("mega-menu-target").style.display = "block";
 
 /* Add key press listener to the document */
-document.addEventListener("keypress", toggleMenus);
+document.addEventListener("keypress", toggleElems);
+
+setTimeout(function(){
+	document.body.style.display = "block";
+}, 500);
+
 /* Toogle function executed on key press event */
-function toggleMenus(myKeyEvent){
+function toggleElems(myKeyEvent){
 	switch(myKeyEvent.key) {
-		// Breadcrumbs
 		case "b":
 		case "B":
-			if (!breadcrumbsOnPage)
-				break;
-			
-			if (document.getElementsByClassName("b-breadcrumb")[0].style.display == "none") {
-				document.getElementsByClassName("b-breadcrumb")[0].style.display = "block";
-				sessionStorage.breadcrumbs = "yes";
-			} else {
-				document.getElementsByClassName("b-breadcrumb")[0].style.display = "none";
-				sessionStorage.breadcrumbs = "no";
-			}
+			breadcrumbs(true);
 			break;
-		// Site bar
 		case "s":
 		case "S":
-			if (document.getElementsByClassName("site-bar")[0].style.display == "none") {
-				document.getElementsByClassName("site-bar")[0].style.display = "block";
-				sessionStorage.sitebar = "yes";
-				//Mobile menus?
-				if (x.matches) {
-					document.getElementsByTagName("header")[0].style.display = "block";
-					document.getElementById("site-main").style.paddingTop = "47px";
-				}
-					
-			} else {
-				document.getElementsByClassName("site-bar")[0].style.display = "none";
-				sessionStorage.sitebar = "no";
-				changeMobileMenuFunction(x);
-			}
+			siteBar(true);
 			break;
-		// Mega menus
 		case "m":
 		case "M":
-			if (document.getElementById("mega-menu-target").style.display == "none") {
-				document.getElementById("mega-menu-target").style.display = "block";
-				sessionStorage.menus = "yes";
-			} else {
-				document.getElementById("mega-menu-target").style.display = "none";
-				sessionStorage.menus = "no";
-			}
+			megaMenus(true);
 			break;
-		// Footer
 		case "f":
 		case "F":
-			if (document.getElementsByClassName("ddb-footer")[0].style.display == "none") {
-				document.getElementsByClassName("ddb-footer")[0].style.display = "flex";
-				sessionStorage.footer = "yes";
-			} else {
-				document.getElementsByClassName("ddb-footer")[0].style.display = "none";
-				sessionStorage.footer = "no";
-			}
+			footer(true);
+			break;
+		case "d":
+		case "D":
+			darkMode(true);
 			break;
 		case "h":
 		case "H":
-			alert("S: Toggle Site bar\nM: Toogle Menu\nB: Toggle Breadcrumbs\nF: Toggle Footer");
+			alert("S: Toggle Site bar\nM: Toogle Menu\nB: Toggle Breadcrumbs\nF: Toggle Footer\nD: Toggle dark mode");
 			break;
+	}
+}
+
+function breadcrumbs(toggle) {
+	if (toggle)
+		if (sessionStorage.breadcrumbs == "no")
+			sessionStorage.breadcrumbs = "yes";
+		else
+			sessionStorage.breadcrumbs = "no";	
+			
+	if (breadcrumbsOnPage)
+		if (sessionStorage.breadcrumbs == "yes") {
+			document.getElementsByClassName("b-breadcrumb")[0].style.display = "block";
+		} else {
+			document.getElementsByClassName("b-breadcrumb")[0].style.display = "none";
+		}
+}
+
+function megaMenus(toggle) {
+	if (toggle)
+		if (sessionStorage.menus == "no")
+			sessionStorage.menus = "yes";
+		else
+			sessionStorage.menus = "no";
+			
+	if (sessionStorage.menus == "yes")
+		document.getElementById("mega-menu-target").style.display = "block";
+	else
+		document.getElementById("mega-menu-target").style.display = "none";
+}
+
+function footer(toggle) {
+	if (toggle)
+		if (sessionStorage.footer == "no")
+			sessionStorage.footer = "yes";
+		else
+			sessionStorage.footer = "no";
+			
+	if (sessionStorage.footer == "yes")
+		document.getElementsByClassName("ddb-footer")[0].style.display = "flex";
+	else
+		document.getElementsByClassName("ddb-footer")[0].style.display = "none";
+}
+
+function siteBar(toggle) {
+	if (toggle)
+		if (sessionStorage.sitebar == "no")
+			sessionStorage.sitebar= "yes";
+		else
+			sessionStorage.sitebar = "no";
+
+	if (sessionStorage.sitebar == "no") {
+		document.getElementsByClassName("site-bar")[0].style.display = "block";
+		if (x.matches) {
+			document.getElementsByTagName("header")[0].style.display = "block";
+			document.getElementById("site-main").style.paddingTop = "47px";
+		}
+	} else {
+		document.getElementsByClassName("site-bar")[0].style.display = "none";
+		changeMobileMenuFunction(x);
+	}
+}
+
+function darkMode(toggle) {
+	if (toggle)
+		if (sessionStorage.darkmode == "no")
+			sessionStorage.darkmode = "yes";
+		else
+			sessionStorage.darkmode = "no";
+			
+	if (sessionStorage.darkmode == "no") {
+		document.getElementsByTagName("body")[0].style.backgroundColor = "black";
+		document.getElementById("site-main").style.backgroundColor = "black";
+		document.getElementById("content").style.color = "grey";
+		var headers = document.getElementById("content").querySelectorAll("h1, h2, h3, h4");
+		var numHeaders = headers.length;
+		for (var i=0; i < numHeaders; i++) {
+			headers[i].style.color = "grey";
+		}
+	} else {
+		document.getElementById("site-main").style.backgroundColor = "";
+		document.getElementById("content").style.color = "black";
+		var headers = document.getElementById("content").querySelectorAll("h1, h2, h3, h4");
+		var numHeaders = headers.length;
+		for (var i=0; i < numHeaders; i++) {
+			headers[i].style.color = "black";
+		}
 	}
 }
 
