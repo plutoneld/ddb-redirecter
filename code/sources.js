@@ -198,8 +198,7 @@ function miniToC() {
 			if (link.length > 0)
 				sessionStorage.minitoc = sessionStorage.minitoc + '<a href="' + link[0].href + '">' + link[0].innerHTML + '</a>';
 		}
-		console.log(sessionStorage.minitoc);
-	} else if (path_pieces.length > 3) {
+	} else if (path_pieces.length > 3 && typeof(sessionStorage.minitoc) != 'undefined') {
 		document.getElementById("footer-push").innerHTML = '<div class="dropdown"><button class="dropbtn">mini ToC</button><div class="dropdown-content">' + sessionStorage.minitoc + '</div></div>';
 	}
 }
