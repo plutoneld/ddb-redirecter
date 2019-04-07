@@ -38,7 +38,6 @@ footer(false);
 megaMenus(false);
 breadcrumbs(false);
 
-
 /* Add key press listener to the document */
 document.addEventListener("keypress", toggleElems);
 
@@ -163,6 +162,48 @@ function darkMode(toggle) {
 	}
 }
 
+function miniToC() {
+	var cur_url = window.location.pathname;
+	var path_pieces = cur_url.split('/');
+	var search_for_headings = '';
+	var link_headings = '';
+	
+	//Check to see if where on a ToC
+	if (path_pieces.length == 3) {
+		sessionStorage.minitoc = '';
+		
+		switch (path_pieces[2]) {
+			case 'phb':
+			case 'dmg':
+			case 'scag':
+			case 'vgtm':
+				search_for_headings = "h2";
+				break;
+			case 'xgte':
+				search_for_headings = "h3";
+				break;
+			case 'basic-rules':
+			case 'mm':
+			case 'ggtr':
+			case 'mtof':
+			case 'wgte':
+				search_for_headings = "h4";
+				break;
+		}
+		
+		link_headings = document.getElementsByTagName(search_for_headings);
+		
+		for (var i = 0; i < link_headings.length;i++) {
+			var link = link_headings[i].getElementsByTagName("a");
+			if (link.length > 0)
+				sessionStorage.minitoc = sessionStorage.minitoc + '<a href="' + link[0].href + '">' + link[0].innerHTML + '</a>';
+		}
+		console.log(sessionStorage.minitoc);
+	} else if (path_pieces.length > 3) {
+		document.getElementById("footer-push").innerHTML = '<div class="dropdown"><button class="dropbtn">mini ToC</button><div class="dropdown-content">' + sessionStorage.minitoc + '</div></div>';
+	}
+}
+
 /* Change top padding when responsive design active */
 function changeMobileMenuFunction(x) {
 		if (x.matches) { // If media query matches
@@ -177,3 +218,4 @@ function changeMobileMenuFunction(x) {
 
 changeMobileMenuFunction(x);
 x.addListener(changeMobileMenuFunction);
+miniToC();
