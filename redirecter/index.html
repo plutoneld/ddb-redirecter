@@ -372,9 +372,9 @@
                     "304":{"url":"appendix-b-monster-lists","pagebreak":"below"},
                     "305":{"url":"appendix-b-monster-lists","pagebreak":"below"},
                     "306":{"url":"appendix-b-monster-lists#MonstersbyChallengeRating","pagebreak":""},
-                    "307":{"url":"appendix-b-monster-lists#MonstersbyChallengeRating","pagebreak":""},
-                    "308":{"url":"appendix-b-monster-lists#MonstersbyChallengeRating","pagebreak":""},
-                    "309":{"url":"appendix-b-monster-lists#MonstersbyChallengeRating","pagebreak":""},
+                    "307":{"url":"appendix-b-monster-lists#Challenge1200XP","pagebreak":"below"},
+                    "308":{"url":"appendix-b-monster-lists#Challenge41100XP","pagebreak":"below"},
+                    "309":{"url":"appendix-b-monster-lists#Challenge117200XP","pagebreak":""},
                     "310":{"url":"appendix-c-maps","pagebreak":""},
                     "311":{"url":"appendix-c-maps","pagebreak":"below"},
                     "312":{"url":"appendix-c-maps","pagebreak":"below"},
@@ -1137,7 +1137,7 @@
         </script>
     </head>
     <body style='background-color:black;' onload="getSourceAndPage()">
-        <div style='margin:auto;width:100%;display:none;' id='content' class="phb">
+        <div style='margin:auto;width:100%;height: 1500px;display:none;' id='content' class="phb">
             <h1>DDB Redirecter</h1>
             <p>Welcome to the DDB Redirecter! I hope you find what you're looking for.</p>
 
@@ -1170,11 +1170,14 @@
             <p>Add the source book acronym and page number to this page's URL. For instance, if you want to go to Player's Handbook page 256, add <a href="?PHB256">?PHB256</a>
                 at the end of the URL. Or use the form above! It will do the same thing, but the URL is formatted as <a href="?source=PHB&page=256">?source=PHB&page=256.</a></p>
 
-            <blockquote><h5>Notes on PHB</h5>In the physical book, the section on Weapon describes the weapon properties and is followed with a table showing
+            <blockquote><h5>Notes on PHB</h5>In the physical book, the section on Weapon describes the weapon properties and is followed with a table 
                 showing the common weapons. On DDB these are the other way around, so the content flow is slightly different.<br/>The pages following are on Adventuring Gear, and 
                 all link to the section Adventuring Gear on DDB, since the individual items are non-linkable.</blockquote>
-            <blockquote><h5>Notes on MM</h5>Some statblocks are linkable and some are not. The flow will be off sometimes.</blockquote>
-            <blockquote><h5>Notes on DMG</h5>Chapter 7 is split up in several pages due to the vast number of magic items etc. This means if you search for the page that is in the middle between these sections, you won't be able to scroll to the right place. If you find that this is the case, just move one more page ahead.</blockquote>
+            <blockquote><h5>Notes on MM</h5>Some statblocks are linkable and some are not. The flow will be off sometimes, due to the physical book sometimes having statblocks on an entire page.</blockquote>
+            <blockquote><h5>Notes on DMG</h5>Chapter 7 is split up in several pages due to the vast number of magic items etc. This means if you search for 
+                the page that is in the middle between these sections, you won't be able to scroll to the right place (they're on different base pages). If you 
+                find that this is the case, just move one more page ahead. The pages in Appendix C all link to the beginning of the appendix, since there are no 
+                linkable sections. Some page in Appendix B suffer the same fate.</blockquote>
             <code><pre></pre></code>
             <h2>How precise is it?</h2>
             <p>The redirecter is dependent on being able to link to the different sections on DDB. Not all sections are linkable, though.</p>
@@ -1182,14 +1185,13 @@
             <p>Physical book pages that does not begin with a new section, are linked to the <em>closest</em> or <em>most logical</em> corresponding section on DDB.</p>
 
             <h3>Exact page break</h3>
-            <p>Example of exact page breaks are the beginning of new chapters, races, classes etc.</p>
+            <p>Example of exact page breaks are the beginning of new chapters, races, classes etc. If a page start with a new section, I can almost always link to that exact section.</p>
 
-            <h3>Page break above</h3>
-            <p>If have deemed the content between the linked section, and the actual physical page break to be noteworthy, you get an alert telling you 
-                that the physical page break is above the section you arrive at. I've tried minimizing the use of this, since it's a bit disruptive.</p>
-
-            <h3>Page break below</h3>
-            <p>If the physical page break is below the section you arrive at, I don't alert you since you're probably scrolling down anyway.</p>
+            <h3>None-exact page breaks</h3>
+            <p>Many pages in the physical books start with a bit of text from the preceding section. In this case, I sometimes link to the section that started on the page 
+                before or the first section on the new page. In either case, I indicate that the physical page break was <strong>above</strong> or <strong>below</strong> the 
+            section I sent you to. This indication shows up in the end of the URL as <em>?above</em> and <em>?below</em>.</p>
+            <p>If the content on the page starts with maybe half a sentence, or some text that is very unlikely to be referenced, I don't indicate at all.</p>
 
             <h3>Pages with images</h3>
             <p>Some pages in the physical books consists of only an image. Most of this art is presented somewhere on DDB, but I choose not to redirect to these images.
@@ -1198,7 +1200,8 @@
             <h2>Disclaimer</h2>
             <p>I am not affiliated with Wizards of the Coast or Fandom/Wikia/Curse (D&D Beyond)!</p>
             <h2>Credits</h2>
-            <p>Stylesheet from <a href="https://github.com/stolksdorf/homebrewery">Homebrewery</a></p>
+            <p>Stylesheet from <a href="https://github.com/stolksdorf/homebrewery">Homebrewery</a><br/>
+            Thanks for the input V2Blast@Discord! :-)</p>
             <h2>Contact</h2>
             <p>I'm @fohswe on DDB Forums, @foh81 on Twitter</p>
         </div>
