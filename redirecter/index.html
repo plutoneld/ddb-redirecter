@@ -8,7 +8,78 @@
                 }
             </style>
         <title>Page Number to DDB Redirecter</title>
-        <script>
+    </head>
+    <body style='background-color:black;' onload="getSourceAndPage()">
+        <div style='margin:auto;width:100%;height: 1500px;display:none;' id='content' class="phb">
+            <h1>DDB Redirecter</h1>
+            <p>Welcome to the DDB Redirecter! I hope you find what you're looking for.</p>
+
+            <h2>Message from the other side...</h2>
+            <p style='color: red;' id="info"></p>
+            <div style='display:inline;' id="form">
+                <form action="" onsubmit="getSourceAndPage()">
+                    <select name="source" autofocus>
+                        <option value="PHB">PHB</option>
+                        <option value="DMG">DMG</option>
+                        <option value="MM">MM</option>
+                    </select>
+                    <input type="number" min="1" max="999" name="page">
+                    <button type="submit">Go!</button>
+                </form>
+            </div>
+            
+            <h2>What is this?</h2>
+            <p>A self-contained redirecter to D&D Beyond. Enter a source and a page number and you'll redirected to the (closest) corresponding section on DDB.</p>
+            <p>What does it mean it's self-contained? All the code is within the page itself, with the exception of the stylesheet.</p>
+
+            <h2>Why is it?</h2>
+            <p>I'm a D&D newbie and started "all digital" with D&D Beyond. I found myself wanting to look up these page references that kept coming up here and there, but there wasn't
+                an easy way of doing this. This isn't a huge problem, but I was interested to see if I could make a page reference mapped to DDB.</p>
+            <p>I started out by making a <a href="https://www.dndbeyond.com/forums/dungeons-dragons-discussion/rules-game-mechanics/35037-core-rules-page-references-to-d-d-beyond">
+                DDB to physical page reference</a>, meaning I went from the table of contents on DDB and checked which physical pages they represented.</p>
+            <p>It wasn't an optimal solution, so I did this thing instead! This redirecter can be used in all kind of places. You can even add it as a Custom Search Engine in Chrome!</p>
+        
+            <h2>How do I use it?</h2>
+            <p>Add the source book acronym and page number to this page's URL. For instance, if you want to go to Player's Handbook page 256, add <a href="?PHB256">?PHB256</a>
+                at the end of the URL. Or use the form above! It will do the same thing, but the URL is formatted as <a href="?source=PHB&page=256">?source=PHB&page=256.</a></p>
+
+            <blockquote><h5>Notes on PHB</h5>In the physical book, the section on Weapon describes the weapon properties and is followed with a table 
+                showing the common weapons. On DDB these are the other way around, so the content flow is slightly different.<br/>The pages following are on Adventuring Gear, and 
+                all link to the section Adventuring Gear on DDB, since the individual items are non-linkable.</blockquote>
+            <blockquote><h5>Notes on MM</h5>Some statblocks are linkable and some are not. The flow will be off sometimes, due to the physical book sometimes having statblocks on an entire page.</blockquote>
+            <blockquote><h5>Notes on DMG</h5>Chapter 7 is split up in several pages due to the vast number of magic items etc. This means if you search for 
+                the page that is in the middle between these sections, you won't be able to scroll to the right place (they're on different base pages). If you 
+                find that this is the case, just move one more page ahead. The pages in Appendix C all link to the beginning of the appendix, since there are no 
+                linkable sections. Some page in Appendix B suffer the same fate.</blockquote>
+            <code><pre></pre></code>
+            <h2>How precise is it?</h2>
+            <p>The redirecter is dependent on being able to link to the different sections on DDB. Not all sections are linkable, though.</p>
+            <p>Many pages in the physical books begin with a new section, and thus I can link to the precise place of the page break, provided DDB has a linkable section.</p>
+            <p>Physical book pages that does not begin with a new section, are linked to the <em>closest</em> or <em>most logical</em> corresponding section on DDB.</p>
+
+            <h3>Exact page break</h3>
+            <p>Example of exact page breaks are the beginning of new chapters, races, classes etc. If a page start with a new section, I can almost always link to that exact section.</p>
+
+            <h3>None-exact page breaks</h3>
+            <p>Many pages in the physical books start with a bit of text from the preceding section. In this case, I sometimes link to the section that started on the page 
+                before or the first section on the new page. In either case, I indicate that the physical page break was <strong>above</strong> or <strong>below</strong> the 
+            section I sent you to. This indication shows up in the URL as <em>?above</em> or <em>?below</em> followed with the section ID.</p>
+            <p>If the content on the page starts with maybe half a sentence, or some text that is very unlikely to be referenced, I don't indicate at all.</p>
+
+            <h3>Pages with images</h3>
+            <p>Some pages in the physical books consists of only an image. Most of this art is presented somewhere on DDB, but I choose not to redirect to these images.
+                One exception are the covers of the books.</p>
+            
+            <h2>Disclaimer</h2>
+            <p>I am not affiliated with Wizards of the Coast or Fandom/Wikia/Curse (D&D Beyond)!</p>
+            <h2>Credits</h2>
+            <p>Stylesheet from <a href="https://github.com/stolksdorf/homebrewery">Homebrewery</a><br/>
+            Thanks for the input V2Blast@Discord! :-)</p>
+            <h2>Contact</h2>
+            <p>I'm @fohswe on DDB Forums, @foh81 on Twitter</p>
+        </div>
+    </body>
+    <script>
             var source = '';
             var pageno = '';
             var ddb_url = null;
@@ -1123,75 +1194,4 @@
                 }
             }
         </script>
-    </head>
-    <body style='background-color:black;' onload="getSourceAndPage()">
-        <div style='margin:auto;width:100%;height: 1500px;display:none;' id='content' class="phb">
-            <h1>DDB Redirecter</h1>
-            <p>Welcome to the DDB Redirecter! I hope you find what you're looking for.</p>
-
-            <h2>Message from the other side...</h2>
-            <p style='color: red;' id="info"></p>
-            <div style='display:inline;' id="form">
-                <form action="" onsubmit="getSourceAndPage()">
-                    <select name="source" autofocus>
-                        <option value="PHB">PHB</option>
-                        <option value="DMG">DMG</option>
-                        <option value="MM">MM</option>
-                    </select>
-                    <input type="number" min="1" max="999" name="page">
-                    <button type="submit">Go!</button>
-                </form>
-            </div>
-            
-            <h2>What is this?</h2>
-            <p>A self-contained redirecter to D&D Beyond. Enter a source and a page number and you'll redirected to the (closest) corresponding section on DDB.</p>
-            <p>What does it mean it's self-contained? All the code is within the page itself, with the exception of the stylesheet.</p>
-
-            <h2>Why is it?</h2>
-            <p>I'm a D&D newbie and started "all digital" with D&D Beyond. I found myself wanting to look up these page references that kept coming up here and there, but there wasn't
-                an easy way of doing this. This isn't a huge problem, but I was interested to see if I could make a page reference mapped to DDB.</p>
-            <p>I started out by making a <a href="https://www.dndbeyond.com/forums/dungeons-dragons-discussion/rules-game-mechanics/35037-core-rules-page-references-to-d-d-beyond">
-                DDB to physical page reference</a>, meaning I went from the table of contents on DDB and checked which physical pages they represented.</p>
-            <p>It wasn't an optimal solution, so I did this thing instead! This redirecter can be used in all kind of places. You can even add it as a Custom Search Engine in Chrome!</p>
-        
-            <h2>How do I use it?</h2>
-            <p>Add the source book acronym and page number to this page's URL. For instance, if you want to go to Player's Handbook page 256, add <a href="?PHB256">?PHB256</a>
-                at the end of the URL. Or use the form above! It will do the same thing, but the URL is formatted as <a href="?source=PHB&page=256">?source=PHB&page=256.</a></p>
-
-            <blockquote><h5>Notes on PHB</h5>In the physical book, the section on Weapon describes the weapon properties and is followed with a table 
-                showing the common weapons. On DDB these are the other way around, so the content flow is slightly different.<br/>The pages following are on Adventuring Gear, and 
-                all link to the section Adventuring Gear on DDB, since the individual items are non-linkable.</blockquote>
-            <blockquote><h5>Notes on MM</h5>Some statblocks are linkable and some are not. The flow will be off sometimes, due to the physical book sometimes having statblocks on an entire page.</blockquote>
-            <blockquote><h5>Notes on DMG</h5>Chapter 7 is split up in several pages due to the vast number of magic items etc. This means if you search for 
-                the page that is in the middle between these sections, you won't be able to scroll to the right place (they're on different base pages). If you 
-                find that this is the case, just move one more page ahead. The pages in Appendix C all link to the beginning of the appendix, since there are no 
-                linkable sections. Some page in Appendix B suffer the same fate.</blockquote>
-            <code><pre></pre></code>
-            <h2>How precise is it?</h2>
-            <p>The redirecter is dependent on being able to link to the different sections on DDB. Not all sections are linkable, though.</p>
-            <p>Many pages in the physical books begin with a new section, and thus I can link to the precise place of the page break, provided DDB has a linkable section.</p>
-            <p>Physical book pages that does not begin with a new section, are linked to the <em>closest</em> or <em>most logical</em> corresponding section on DDB.</p>
-
-            <h3>Exact page break</h3>
-            <p>Example of exact page breaks are the beginning of new chapters, races, classes etc. If a page start with a new section, I can almost always link to that exact section.</p>
-
-            <h3>None-exact page breaks</h3>
-            <p>Many pages in the physical books start with a bit of text from the preceding section. In this case, I sometimes link to the section that started on the page 
-                before or the first section on the new page. In either case, I indicate that the physical page break was <strong>above</strong> or <strong>below</strong> the 
-            section I sent you to. This indication shows up in the URL as <em>?above</em> or <em>?below</em> followed with the section ID.</p>
-            <p>If the content on the page starts with maybe half a sentence, or some text that is very unlikely to be referenced, I don't indicate at all.</p>
-
-            <h3>Pages with images</h3>
-            <p>Some pages in the physical books consists of only an image. Most of this art is presented somewhere on DDB, but I choose not to redirect to these images.
-                One exception are the covers of the books.</p>
-            
-            <h2>Disclaimer</h2>
-            <p>I am not affiliated with Wizards of the Coast or Fandom/Wikia/Curse (D&D Beyond)!</p>
-            <h2>Credits</h2>
-            <p>Stylesheet from <a href="https://github.com/stolksdorf/homebrewery">Homebrewery</a><br/>
-            Thanks for the input V2Blast@Discord! :-)</p>
-            <h2>Contact</h2>
-            <p>I'm @fohswe on DDB Forums, @foh81 on Twitter</p>
-        </div>
-    </body>
 </html>
