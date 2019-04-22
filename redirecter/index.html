@@ -1,86 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-            <link rel="stylesheet" type="text/css" href="phb.css">
-            <style>
-                p {
-                    font-size: 1.2em;
-                }
-            </style>
         <title>Page Number to DDB Redirecter</title>
-    </head>
-    <body style='background-color:black;' onload="getSourceAndPage()">
-        <div style='margin:auto;width:100%;height: 1500px;display:none;' id='content' class="phb">
-            <h1>DDB Redirecter</h1>
-            <p>Welcome to the DDB Redirecter! I hope you find what you're looking for.</p>
-
-            <h2>Message from the other side...</h2>
-            <p style='color: red;' id="info"></p>
-            <div style='display:inline;' id="form">
-                <form action="" onsubmit="getSourceAndPage()">
-                    <select name="source" autofocus>
-                        <option value="PHB">PHB</option>
-                        <option value="DMG">DMG</option>
-                        <option value="MM">MM</option>
-                        <option value="SCAG">SCAG</option>
-                    </select>
-                    <input type="number" min="1" max="999" name="page">
-                    <button type="submit">Go!</button>
-                </form>
-            </div>
-            
-            <h2>What is this?</h2>
-            <p>A self-contained redirecter to D&D Beyond. Enter a source and a page number and you'll redirected to the (closest) corresponding section on DDB.</p>
-            <p>What does it mean it's self-contained? All the code is within the page itself, with the exception of the stylesheet.</p>
-
-            <h2>Why is it?</h2>
-            <p>I'm a D&D newbie and started "all digital" with D&D Beyond. I found myself wanting to look up these page references that kept coming up here and there, but there wasn't
-                an easy way of doing this. This isn't a huge problem, but I was interested to see if I could make a page reference mapped to DDB.</p>
-            <p>I started out by making a <a href="https://www.dndbeyond.com/forums/dungeons-dragons-discussion/rules-game-mechanics/35037-core-rules-page-references-to-d-d-beyond">
-                DDB to physical page reference</a>, meaning I went from the table of contents on DDB and checked which physical pages they represented.</p>
-            <p>It wasn't an optimal solution, so I did this thing instead! This redirecter can be used in all kind of places. You can even add it as a Custom Search Engine in Chrome!</p>
-        
-            <h2>How do I use it?</h2>
-            <p>Add the source book acronym and page number to this page's URL. For instance, if you want to go to Player's Handbook page 256, add <a href="?PHB256">?PHB256</a>
-                at the end of the URL. Or use the form above! It will do the same thing, but the URL is formatted as <a href="?source=PHB&page=256">?source=PHB&page=256.</a></p>
-
-            <blockquote><h5>Notes on PHB</h5>In the physical book, the section on Weapon describes the weapon properties and is followed with a table 
-                showing the common weapons. On DDB these are the other way around, so the content flow is slightly different.<br/>The pages following are on Adventuring Gear, and 
-                all link to the section Adventuring Gear on DDB, since the individual items are non-linkable.</blockquote>
-            <blockquote><h5>Notes on MM</h5>Some statblocks are linkable and some are not. The flow will be off sometimes, due to the physical book sometimes having statblocks on an entire page.</blockquote>
-            <blockquote><h5>Notes on DMG</h5>Chapter 7 is split up in several pages due to the vast number of magic items etc. This means if you search for 
-                the page that is in the middle between these sections, you won't be able to scroll to the right place (they're on different base pages). If you 
-                find that this is the case, just move one more page ahead. The pages in Appendix C all link to the beginning of the appendix, since there are no 
-                linkable sections. Some page in Appendix B suffer the same fate.</blockquote>
-            <code><pre></pre></code>
-            <h2>How precise is it?</h2>
-            <p>The redirecter is dependent on being able to link to the different sections on DDB. Not all sections are linkable, though.</p>
-            <p>Many pages in the physical books begin with a new section, and thus I can link to the precise place of the page break, provided DDB has a linkable section.</p>
-            <p>Physical book pages that does not begin with a new section, are linked to the <em>closest</em> or <em>most logical</em> corresponding section on DDB.</p>
-
-            <h3>Exact page break</h3>
-            <p>Example of exact page breaks are the beginning of new chapters, races, classes etc. If a page start with a new section, I can almost always link to that exact section.</p>
-
-            <h3>None-exact page breaks</h3>
-            <p>Many pages in the physical books start with a bit of text from the preceding section. In this case, I sometimes link to the section that started on the page 
-                before or the first section on the new page. In either case, I indicate that the physical page break was <strong>above</strong> or <strong>below</strong> the 
-            section I sent you to. This indication shows up in the URL as <em>?above</em> or <em>?below</em> followed with the section ID.</p>
-            <p>If the content on the page starts with maybe half a sentence, or some text that is very unlikely to be referenced, I don't indicate at all.</p>
-
-            <h3>Pages with images</h3>
-            <p>Some pages in the physical books consists of only an image. Most of this art is presented somewhere on DDB, but I choose not to redirect to these images.
-                One exception are the covers of the books.</p>
-            
-            <h2>Disclaimer</h2>
-            <p>I am not affiliated with Wizards of the Coast or Fandom/Wikia/Curse (D&D Beyond)!</p>
-            <h2>Credits</h2>
-            <p>Stylesheet from <a href="https://github.com/stolksdorf/homebrewery">Homebrewery</a><br/>
-            Thanks for the input V2Blast@Discord! :-)</p>
-            <h2>Contact</h2>
-            <p>I'm @fohswe on DDB Forums, @foh81 on Twitter</p>
-        </div>
-    </body>
-    <script>
+        <link rel="stylesheet" type="text/css" href="phb.css">
+        <style>
+            p {
+                font-size: 1.2em;
+            }
+        </style>
+        <script>
             var source = '';
             var pageno = '';
             var ddb_url = null;
@@ -110,6 +38,7 @@
 
                     //Did we get a page number? If so, what source?
                     if (isFinite(pageno))
+                        source = source.toUpperCase();
                         switch (source) {
                             case 'PHB':
                                 ddb_url = pageRefPHB(pageno);
@@ -122,6 +51,9 @@
                                 break;
                             case 'SCAG':
                                 ddb_url = pageRefSCAG(pageno);
+                                break;
+                            case 'XGTE':
+                                ddb_url = pageRefXGTE(pageno);
                                 break;
                             default:
                                 ddb_url = null;
@@ -147,10 +79,222 @@
                         } else {
                             if (url.indexOf('#') != -1) {
                                 var split_url = url.split('#');
-                                return (base_url + split_url[0] + "?" + pagebreak + "#" + split_url[1]);
+                                return (base_url + split_url[0] + "?" + pagebreak + " " + split_url[1]);
                             }
                         }
                     }
+            }
+
+            function pageRefXGTE(page) {
+                base_url = 'https://www.dndbeyond.com/sources/xgte/';
+
+                var pages = {
+                    "2":{"url":"credits","pagebreak":""},
+                    "3":{"url":"dungeon-masters-tools#","pagebreak":""},
+                    "4":{"url":"introduction","pagebreak":""},
+                    "5":{"url":"introduction#TheCoreRules","pagebreak":""},
+                    "6":{"url":"image","pagebreak":""},
+                    "7":{"url":"subclasses","pagebreak":""},
+                    "8":{"url":"subclasses#Barbarian","pagebreak":""},
+                    "9":{"url":"subclasses#Superstitions","pagebreak":"below"},
+                    "10":{"url":"subclasses#AncestralProtectors","pagebreak":""},
+                    "11":{"url":"subclasses#RagingStorm","pagebreak":""},
+                    "12":{"url":"subclasses#Bard","pagebreak":""},
+                    "13":{"url":"subclasses#Embarrassment","pagebreak":"below"},
+                    "14":{"url":"subclasses#BardColleges","pagebreak":"above"},
+                    "15":{"url":"subclasses#CollegeofSwords","pagebreak":"above"},
+                    "16":{"url":"subclasses#MastersFlourish","pagebreak":""},
+                    "17":{"url":"subclasses#Cleric","pagebreak":""},
+                    "18":{"url":"subclasses#DivineDomains","pagebreak":""},
+                    "19":{"url":"subclasses#ForgeDomainSpells","pagebreak":"below"},
+                    "20":{"url":"subclasses#GraveDomainFeatures","pagebreak":""},
+                    "21":{"url":"subclasses#Druid","pagebreak":""},
+                    "22":{"url":"subclasses#Mentors","pagebreak":""},
+                    "23":{"url":"subclasses#WalkerinDreams","pagebreak":"above"},
+                    "24":{"url":"subclasses#MightySummoner","pagebreak":"above"},
+                    "25":{"url":"subclasses#Forest","pagebreak":""},
+                    "26":{"url":"subclasses#Hill","pagebreak":""},
+                    "27":{"url":"subclasses#Fighter","pagebreak":""},
+                    "28":{"url":"subclasses#SignatureStyle","pagebreak":""},
+                    "29":{"url":"subclasses#ArcaneShotOptions","pagebreak":"below"},
+                    "30":{"url":"subclasses#Cavalier","pagebreak":"above"},
+                    "31":{"url":"subclasses#FerociousCharger","pagebreak":""},
+                    "32":{"url":"subclasses#Monk","pagebreak":""},
+                    "33":{"url":"subclasses#Master","pagebreak":""},
+                    "34":{"url":"subclasses#WayoftheDrunkenMasterFeatures","pagebreak":"below"},
+                    "35":{"url":"subclasses#OnewiththeBlade","pagebreak":""},
+                    "36":{"url":"subclasses#Paladin","pagebreak":""},
+                    "37":{"url":"subclasses#Nemesis","pagebreak":"below"},
+                    "38":{"url":"subclasses#TenetsofConquest","pagebreak":"below"},
+                    "39":{"url":"subclasses#TenetsofRedemption","pagebreak":"below"},
+                    "40":{"url":"subclasses#Ranger","pagebreak":""},
+                    "41":{"url":"subclasses#SwornEnemy","pagebreak":""},
+                    "42":{"url":"subclasses#GloomStalkerMagic","pagebreak":""},
+                    "43":{"url":"subclasses#PlanarWarrior","pagebreak":"below"},
+                    "44":{"url":"subclasses#Rogue","pagebreak":""},
+                    "45":{"url":"subclasses#Benefactor","pagebreak":""},
+                    "46":{"url":"subclasses#EarforDeceit","pagebreak":"below"},
+                    "47":{"url":"subclasses#Scout","pagebreak":""},
+                    "48":{"url":"subclasses#Sorcerer","pagebreak":""},
+                    "49":{"url":"subclasses#SupernaturalMark","pagebreak":"below"},
+                    "50":{"url":"subclasses#SorcerousOrigins","pagebreak":""},
+                    "51":{"url":"subclasses#ShadowMagicFeatures","pagebreak":""},
+                    "52":{"url":"subclasses#StormSorcery","pagebreak":"below"},
+                    "53":{"url":"subclasses#Warlock","pagebreak":""},
+                    "54":{"url":"subclasses#BindingMark","pagebreak":""},
+                    "55":{"url":"subclasses#HealingLight","pagebreak":"below"},
+                    "56":{"url":"subclasses#HexWarrior","pagebreak":"below"},
+                    "57":{"url":"subclasses#GhostlyGaze","pagebreak":"below"},
+                    "58":{"url":"subclasses#Wizard","pagebreak":""},
+                    "59":{"url":"subclasses#Eccentricity","pagebreak":""},
+                    "60":{"url":"subclasses#TacticalWit","pagebreak":""},
+                    "61":{"url":"character-options-this-is-your-life","pagebreak":""},
+                    "62":{"url":"character-options-this-is-your-life#Parents","pagebreak":"below"},
+                    "63":{"url":"character-options-this-is-your-life#FamilyandFriends","pagebreak":"above"},
+                    "64":{"url":"character-options-this-is-your-life#ChildhoodHome","pagebreak":""},
+                    "65":{"url":"character-options-this-is-your-life#Criminal","pagebreak":""},
+                    "66":{"url":"character-options-this-is-your-life#Sage","pagebreak":""},
+                    "67":{"url":"character-options-this-is-your-life#Cleric","pagebreak":""},
+                    "68":{"url":"character-options-this-is-your-life#Paladin","pagebreak":""},
+                    "69":{"url":"character-options-this-is-your-life#Warlock","pagebreak":"below"},
+                    "70":{"url":"character-options-this-is-your-life#SecondaryTables","pagebreak":""},
+                    "71":{"url":"character-options-this-is-your-life#SupernaturalEvents","pagebreak":""},
+                    "72":{"url":"character-options-this-is-your-life#War","pagebreak":"below"},
+                    "73":{"url":"character-options-racial-feats","pagebreak":""},
+                    "74":{"url":"character-options-racial-feats#BountifulLuck","pagebreak":"below"},
+                    "75":{"url":"character-options-racial-feats#FlamesofPhlegethos","pagebreak":"below"},
+                    "76":{"url":"image","pagebreak":""},
+                    "77":{"url":"dungeon-masters-tools","pagebreak":""},
+                    "78":{"url":"dungeon-masters-tools#SleepinginArmor","pagebreak":"below"},
+                    "79":{"url":"dungeon-masters-tools#AlchemistsSupplies","pagebreak":"above"},
+                    "80":{"url":"dungeon-masters-tools#CarpentersTools","pagebreak":"above"},
+                    "81":{"url":"dungeon-masters-tools#CooksUtensils","pagebreak":"below"},
+                    "82":{"url":"dungeon-masters-tools#GlassblowersTools","pagebreak":""},
+                    "83":{"url":"dungeon-masters-tools#LeatherworkersTools","pagebreak":"below"},
+                    "84":{"url":"dungeon-masters-tools#PottersTools","pagebreak":""},
+                    "85":{"url":"dungeon-masters-tools#TinkersTools","pagebreak":"below"},
+                    "86":{"url":"dungeon-masters-tools#InvalidSpellTargets","pagebreak":"below"},
+                    "87":{"url":"dungeon-masters-tools#TokenMethod","pagebreak":"above"},
+                    "88":{"url":"dungeon-masters-tools#EncounterBuilding","pagebreak":"above"},
+                    "89":{"url":"dungeon-masters-tools#WeakMonstersandHighLevelCharacters","pagebreak":"above"},
+                    "90":{"url":"dungeon-masters-tools#MultipleMonsters1st5thLevel","pagebreak":""},
+                    "91":{"url":"dungeon-masters-tools#MonsterPersonality","pagebreak":""},
+                    "92":{"url":"dungeon-masters-tools#RandomEncounters","pagebreak":""},
+                    "93":{"url":"random-encounters","pagebreak":""},
+                    "94":{"url":"random-encounters#CoastalEncounters","pagebreak":"below"},
+                    "95":{"url":"random-encounters#CoastalEncountersLevels1720","pagebreak":"above"},
+                    "96":{"url":"random-encounters#DesertEncounters","pagebreak":"below"},
+                    "97":{"url":"random-encounters#DesertEncountersLevels1720","pagebreak":"above"},
+                    "98":{"url":"random-encounters#ForestEncounters","pagebreak":"below"},
+                    "99":{"url":"random-encounters#ForestEncountersLevels510","pagebreak":""},
+                    "100":{"url":"random-encounters#ForestEncountersLevels1720","pagebreak":"above"},
+                    "101":{"url":"random-encounters#GrasslandEncountersLevels610","pagebreak":"below"},
+                    "102":{"url":"random-encounters#HillEncountersLevels14","pagebreak":"below"},
+                    "103":{"url":"random-encounters#HillEncountersLevels1116","pagebreak":""},
+                    "104":{"url":"random-encounters#MountainEncountersLevels14","pagebreak":"above"},
+                    "105":{"url":"random-encounters#MountainEncountersLevels1116","pagebreak":""},
+                    "106":{"url":"random-encounters#SwampEncountersLevels510","pagebreak":"above"},
+                    "107":{"url":"random-encounters#UnderdarkEncountersLevels14","pagebreak":"below"},
+                    "108":{"url":"random-encounters#UnderdarkEncountersLevels510","pagebreak":"below"},
+                    "109":{"url":"random-encounters#UnderdarkEncountersLevels1720","pagebreak":"above"},
+                    "110":{"url":"random-encounters#UnderwaterEncountersLevels510","pagebreak":""},
+                    "111":{"url":"random-encounters#UrbanEncountersLevels510","pagebreak":"above"},
+                    "112":{"url":"random-encounters#UrbanEncountersLevels1116","pagebreak":"above"},
+                    "113":{"url":"traps-revisited","pagebreak":""},
+                    "114":{"url":"traps-revisited#BearTrap","pagebreak":"above"},
+                    "115":{"url":"traps-revisited#NetTrap","pagebreak":"below"},
+                    "116":{"url":"traps-revisited#Purpose","pagebreak":"below"},
+                    "117":{"url":"traps-revisited#Triggers","pagebreak":""},
+                    "118":{"url":"traps-revisited#ComplexTraps","pagebreak":""},
+                    "119":{"url":"traps-revisited#PathofBlades","pagebreak":"below"},
+                    "120":{"url":"traps-revisited#SphereofCrushingDoom","pagebreak":"below"},
+                    "121":{"url":"traps-revisited#DesigningComplexTraps","pagebreak":"above"},
+                    "122":{"url":"traps-revisited#DynamicElements","pagebreak":"below"},
+                    "123":{"url":"traps-revisited#DefeatingComplexTraps","pagebreak":""},
+                    "124":{"url":"downtime-revisited#Rivals","pagebreak":"below"},
+                    "125":{"url":"downtime-revisited#ExampleRivalHighPriestCheldar","pagebreak":"above"},
+                    "126":{"url":"downtime-revisited#BuyingaMagicItem","pagebreak":"above"},
+                    "127":{"url":"downtime-revisited#Carousing","pagebreak":"above"},
+                    "128":{"url":"downtime-revisited#CraftinganItem","pagebreak":"above"},
+                    "129":{"url":"downtime-revisited#CraftinganItem","pagebreak":"below"},
+                    "130":{"url":"downtime-revisited#Crime","pagebreak":"above"},
+                    "131":{"url":"downtime-revisited#PitFighting","pagebreak":"above"},
+                    "132":{"url":"downtime-revisited#ReligiousService","pagebreak":"below"},
+                    "133":{"url":"downtime-revisited#ScribingaSpellScroll","pagebreak":"above"},
+                    "134":{"url":"downtime-revisited#Training","pagebreak":"above"},
+                    "135":{"url":"awarding-magic-items","pagebreak":""},
+                    "136":{"url":"awarding-magic-items#ChoosingItemsPiecemeal","pagebreak":"above"},
+                    "137":{"url":"common-magic-items","pagebreak":"below"},
+                    "138":{"url":"common-magic-items#InstrumentofScribing","pagebreak":""},
+                    "139":{"url":"common-magic-items#ShieldofExpression","pagebreak":""},
+                    "140":{"url":"common-magic-items#WandofConducting","pagebreak":""},
+                    "141":{"url":"magic-item-tables","pagebreak":"below"},
+                    "142":{"url":"magic-item-tables#MinorItemsLegendary","pagebreak":""},
+                    "143":{"url":"magic-item-tables#MajorItemsRare","pagebreak":"below"},
+                    "144":{"url":"magic-item-tables#MajorItemsVeryRare","pagebreak":""},
+                    "145":{"url":"magic-item-tables#MajorItemsLegendary","pagebreak":"above"},
+                    "146":{"url":"image","pagebreak":""},
+                    "147":{"url":"spells","pagebreak":""},
+                    "148":{"url":"spells#DruidSpells","pagebreak":"below"},
+                    "149":{"url":"spells#WarlockSpells","pagebreak":"below"},
+                    "150":{"url":"spells#SpellDescriptions","pagebreak":""},
+                    "151":{"url":"spells#Catnap","pagebreak":""},
+                    "152":{"url":"spells#ControlFlames","pagebreak":"above"},
+                    "153":{"url":"spells#CrownofStars","pagebreak":"below"},
+                    "154":{"url":"spells#Dawn","pagebreak":"below"},
+                    "155":{"url":"spells#Earthbind","pagebreak":"below"},
+                    "156":{"url":"spells#FindGreaterSteed","pagebreak":"below"},
+                    "157":{"url":"spells#GuardianofNature","pagebreak":"above"},
+                    "158":{"url":"spells#IllusoryDragon","pagebreak":"below"},
+                    "159":{"url":"spells#InvestitureofFlame","pagebreak":""},
+                    "160":{"url":"spells#InvestitureofStone","pagebreak":"below"},
+                    "161":{"url":"spells#MassPolymorph","pagebreak":"below"},
+                    "162":{"url":"spells#MightyFortress","pagebreak":"below"},
+                    "163":{"url":"spells#MoldEarth","pagebreak":"below"},
+                    "164":{"url":"spells#Pyrotechnics","pagebreak":"below"},
+                    "165":{"url":"spells#SickeningRadiance","pagebreak":"below"},
+                    "166":{"url":"spells#SteelWindStrike","pagebreak":"above"},
+                    "167":{"url":"spells#SummonGreaterDemon","pagebreak":"below"},
+                    "168":{"url":"spells#TensersTransformation","pagebreak":"above"},
+                    "169":{"url":"spells#TinyServant","pagebreak":"below"},
+                    "170":{"url":"spells#VitriolicSphere","pagebreak":""},
+                    "171":{"url":"spells#WaterySphere","pagebreak":"below"},
+                    "172":{"url":"shared-campaigns","pagebreak":""},
+                    "173":{"url":"shared-campaigns#CombatEncounters","pagebreak":""},
+                    "174":{"url":"shared-campaigns#IndividualTreasure","pagebreak":"below"},
+                    "175":{"url":"character-names","pagebreak":""},
+                    "176":{"url":"#DragonbornClan","pagebreak":"below"},
+                    "177":{"url":"#ElfChild","pagebreak":"below"},
+                    "178":{"url":"#ElfFamily","pagebreak":"below"},
+                    "179":{"url":"#HalflingFemale","pagebreak":""},
+                    "180":{"url":"#HalfOrcMale","pagebreak":""},
+                    "181":{"url":"#HumanNames","pagebreak":""},
+                    "182":{"url":"#CelticFemale","pagebreak":""},
+                    "183":{"url":"#EgyptianFemale","pagebreak":""},
+                    "184":{"url":"#EnglishFemale","pagebreak":""},
+                    "185":{"url":"#FrenchFemale","pagebreak":""},
+                    "186":{"url":"#GreekFemale","pagebreak":""},
+                    "187":{"url":"#JapaneseFemale","pagebreak":""},
+                    "188":{"url":"#MesoamericanFemale","pagebreak":""},
+                    "189":{"url":"#NigerCongoFemale","pagebreak":""},
+                    "190":{"url":"#PolynesianFemale","pagebreak":""},
+                    "191":{"url":"#SlavicFemale","pagebreak":""},
+                    "192":{"url":"#SpanishFemale","pagebreak":""}
+                }
+
+                if (page <= 1) {
+                    document.getElementById("info").innerHTML = '<h4>You are looking for XGtE page ' + page + '</h4><p>The Cover of <span style="font-weight: bold;">XGtE</span> can be \
+                    found <a href="https://media-waterdeep.cursecdn.com/attachments/3/105/xgtecover.jpg">here</a>.</p>\
+                    <p><em>Xanathar gazes lovingly upon its pet fish. Indeed, this cover, painted by Jason Rainville, features a great many ofXanathar\'s treasures and secrets. Can you find them all?</em></p>';
+                    return;
+                } else if (page <= 192) {
+                    var page_data = pages[page];
+
+                    return constructURL(page_data.url, page_data.pagebreak);
+                } else {
+                    document.getElementById("info").innerHTML = '<h4>What are you looking for??</h4><p>There\'s only the back side after page 192.</p>';
+                    return;
+                }
             }
 
             function pageRefDMG(page) {
@@ -158,7 +302,7 @@
 
                 var pages = {
                     "2":{"url":"credits","pagebreak":""},
-                    "3":{"url":"#","pagebreak":""},
+                    "3":{"url":" ","pagebreak":""},
                     "4":{"url":"introduction","pagebreak":""},
                     "5":{"url":"introduction#Part2MasterofAdventures","pagebreak":""},
                     "6":{"url":"introduction#KnowYourPlayers","pagebreak":""},
@@ -323,7 +467,7 @@
                     "165":{"url":"magic-items-a-z#DemonArmor","pagebreak":""},
                     "166":{"url":"magic-items-a-z#DragonSlayer","pagebreak":""},
                     "167":{"url":"magic-items-a-z#DwarvenPlate","pagebreak":"above"},
-                    "168":{"url":"magic-items-a-z##ElementalGem","pagebreak":"below"},
+                    "168":{"url":"magic-items-a-z#ElementalGem","pagebreak":"below"},
                     "169":{"url":"magic-items-a-z#FigurineofWondrousPower","pagebreak":""},
                     "170":{"url":"magic-items-a-z#FlameTongue","pagebreak":"above"},
                     "171":{"url":"magic-items-a-z#FrostBrand","pagebreak":"above"},
@@ -368,7 +512,7 @@
                     "210":{"url":"magic-items-a-z#WandofBinding","pagebreak":"below"},
                     "211":{"url":"magic-items-a-z#WandofLightningBolts","pagebreak":""},
                     "212":{"url":"magic-items-a-z#WandoftheWarMage12or3","pagebreak":""},
-                    "213":{"url":"magic-items-a-z##WeaponofWarning","pagebreak":"above"},
+                    "213":{"url":"magic-items-a-z#WeaponofWarning","pagebreak":"above"},
                     "214":{"url":"magic-items-a-z#WingedBoots","pagebreak":""},
                     "215":{"url":"image","pagebreak":""},
                     "216":{"url":"sentient-magic-items-artifacts#Alignment","pagebreak":""},
@@ -494,7 +638,7 @@
 
                 var pages = {
                     "2":{"url":"credits","pagebreak":""},
-                    "3":{"url":"#","pagebreak":""}, //ToC
+                    "3":{"url":" ","pagebreak":""}, //ToC
                     "4":{"url":"introduction","pagebreak":""}, //Preface
                     "5":{"url":"introduction#TheWilderness","pagebreak":""},
                     "6":{"url":"introduction#ThePlanesofExistence","pagebreak":"below"},
@@ -869,7 +1013,7 @@
 
                 var pages = {
                     "2":{"url":"credits","pagebreak":""},
-                    "3":{"url":"#","pagebreak":""}, //ToC
+                    "3":{"url":" ","pagebreak":""}, //ToC
                     "4":{"url":"preface","pagebreak":""}, //Preface
                     "5":{"url":"image","pagebreak":""},
                     "6":{"url":"image","pagebreak":""},
@@ -1049,7 +1193,7 @@
 
                 var pages = {
                     "2":{"url":"credits","pagebreak":""},
-                    "3":{"url":"#","pagebreak":""}, //ToC
+                    "3":{"url":" ","pagebreak":""}, //ToC
                     "4":{"url":"introduction","pagebreak":""}, //Preface
                     "5":{"url":"introduction#Introduction","pagebreak":""},
                     "6":{"url":"introduction#WorldsofAdventure","pagebreak":"below"},
@@ -1221,7 +1365,7 @@
                     "172":{"url":"image","pagebreak":""},
                     "173":{"url":"using-ability-scores","pagebreak":""},
                     "174":{"url":"using-ability-scores#ProficiencyBonus","pagebreak":"below"},
-                    "175":{"url":"using-ability-scores##VariantSkillswithDifferentAbilities","pagebreak":""},
+                    "175":{"url":"using-ability-scores#VariantSkillswithDifferentAbilities","pagebreak":""},
                     "176":{"url":"using-ability-scores#AttackRollsandDamage","pagebreak":""},
                     "177":{"url":"using-ability-scores#SleightofHand","pagebreak":""},
                     "178":{"url":"using-ability-scores#History","pagebreak":"below"},
@@ -1377,5 +1521,78 @@
                     return;
                 }
             }
-        </script>
+    </script>
+    </head>
+    <body style='background-color:black;' onload="getSourceAndPage()">
+        <div style='margin:auto;width:100%;height: 1500px;display:none;' id='content' class="phb">
+            <h1>DDB Redirecter</h1>
+            <p>Welcome to the DDB Redirecter! I hope you find what you're looking for.</p>
+
+            <h2>Message from the other side...</h2>
+            <p style='color: red;' id="info"></p>
+            <div style='display:inline;' id="form">
+                <form action="" onsubmit="getSourceAndPage()">
+                    <select name="source" autofocus>
+                        <option value="PHB">PHB</option>
+                        <option value="DMG">DMG</option>
+                        <option value="MM">MM</option>
+                        <option value="SCAG">SCAG</option>
+                        <option value="XGTE">XGTE</option>
+                    </select>
+                    <input type="number" min="1" max="999" name="page">
+                    <button type="submit">Go!</button>
+                </form>
+            </div>
+            
+            <h2>What is this?</h2>
+            <p>A self-contained redirecter to D&D Beyond. Enter a source and a page number and you'll redirected to the (closest) corresponding section on DDB.</p>
+            <p>What does it mean it's self-contained? All the code is within the page itself, with the exception of the stylesheet.</p>
+
+            <h2>Why is it?</h2>
+            <p>I'm a D&D newbie and started "all digital" with D&D Beyond. I found myself wanting to look up these page references that kept coming up here and there, but there wasn't
+                an easy way of doing this. This isn't a huge problem, but I was interested to see if I could make a page reference mapped to DDB.</p>
+            <p>I started out by making a <a href="https://www.dndbeyond.com/forums/dungeons-dragons-discussion/rules-game-mechanics/35037-core-rules-page-references-to-d-d-beyond">
+                DDB to physical page reference</a>, meaning I went from the table of contents on DDB and checked which physical pages they represented.</p>
+            <p>It wasn't an optimal solution, so I did this thing instead! This redirecter can be used in all kind of places. You can even add it as a Custom Search Engine in Chrome!</p>
+        
+            <h2>How do I use it?</h2>
+            <p>Add the source book acronym and page number to this page's URL. For instance, if you want to go to Player's Handbook page 256, add <a href="?PHB256">?PHB256</a>
+                at the end of the URL. Or use the form above! It will do the same thing, but the URL is formatted as <a href="?source=PHB&page=256">?source=PHB&page=256.</a></p>
+
+            <blockquote><h5>Notes on PHB</h5>In the physical book, the section on Weapon describes the weapon properties and is followed with a table 
+                showing the common weapons. On DDB these are the other way around, so the content flow is slightly different.<br/>The pages following are on Adventuring Gear, and 
+                all link to the section Adventuring Gear on DDB, since the individual items are non-linkable.</blockquote>
+            <blockquote><h5>Notes on MM</h5>Some statblocks are linkable and some are not. The flow will be off sometimes, due to the physical book sometimes having statblocks on an entire page.</blockquote>
+            <blockquote><h5>Notes on DMG</h5>Chapter 7 is split up in several pages due to the vast number of magic items etc. This means if you search for 
+                the page that is in the middle between these sections, you won't be able to scroll to the right place (they're on different base pages). If you 
+                find that this is the case, just move one more page ahead. The pages in Appendix C all link to the beginning of the appendix, since there are no 
+                linkable sections. Some page in Appendix B suffer the same fate.</blockquote>
+            <code><pre></pre></code>
+            <h2>How precise is it?</h2>
+            <p>The redirecter is dependent on being able to link to the different sections on DDB. Not all sections are linkable, though.</p>
+            <p>Many pages in the physical books begin with a new section, and thus I can link to the precise place of the page break, provided DDB has a linkable section.</p>
+            <p>Physical book pages that does not begin with a new section, are linked to the <em>closest</em> or <em>most logical</em> corresponding section on DDB.</p>
+
+            <h3>Exact page break</h3>
+            <p>Example of exact page breaks are the beginning of new chapters, races, classes etc. If a page start with a new section, I can almost always link to that exact section.</p>
+
+            <h3>None-exact page breaks</h3>
+            <p>Many pages in the physical books start with a bit of text from the preceding section. In this case, I sometimes link to the section that started on the page 
+                before or the first section on the new page. In either case, I indicate that the physical page break was <strong>above</strong> or <strong>below</strong> the 
+            section I sent you to. This indication shows up in the URL as <em>?above</em> or <em>?below</em> followed with the section ID.</p>
+            <p>If the content on the page starts with maybe half a sentence, or some text that is very unlikely to be referenced, I don't indicate at all.</p>
+
+            <h3>Pages with images</h3>
+            <p>Some pages in the physical books consists of only an image. Most of this art is presented somewhere on DDB, but I choose not to redirect to these images.
+                One exception are the covers of the books.</p>
+            
+            <h2>Disclaimer</h2>
+            <p>I am not affiliated with Wizards of the Coast or Fandom/Wikia/Curse (D&D Beyond)!</p>
+            <h2>Credits</h2>
+            <p>Stylesheet from <a href="https://github.com/stolksdorf/homebrewery">Homebrewery</a><br/>
+            Thanks for the input V2Blast@Discord! :-)</p>
+            <h2>Contact</h2>
+            <p>I'm <strong>fohswe</strong> on DDB Forums and DDB Discord, <strong>@foh81</strong> on Twitter</p>
+        </div>
+    </body>
 </html>
