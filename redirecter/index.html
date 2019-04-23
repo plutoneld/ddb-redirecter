@@ -13,6 +13,7 @@
             var pageno = '';
             var ddb_url = null;
             var base_url = '';
+            var redirect = true;
 
             function getSourceAndPage() {
                 var get_var = window.location.href.split('?')[1];
@@ -33,11 +34,16 @@
                         pageno = get_var.substring(4);
                     } else {
                         source = get_var.split('=')[1].split('&')[0];
-                        pageno = get_var.split('=')[2];
+                        pageno = get_var.split('=')[2].split('&')[0];
+
+                        if (get_var.split('=')[3] === 'url')
+                            redirect = false;
+                        else
+                            redirect = true;
                     }
 
                     //Did we get a page number? If so, what source?
-                    if (isFinite(pageno))
+                    if (isFinite(pageno) && redirect) {
                         source = source.toUpperCase();
                         switch (source) {
                             case 'PHB':
@@ -59,12 +65,16 @@
                                 ddb_url = null;
                                 break;
                         }
+                    }
 
                     //If we got an URL, redirect to it
                     if (ddb_url != null)
                         window.location.assign(ddb_url);
                     else {
                         document.getElementById("content").style.display = "block";
+
+                        if (!redirect)
+                            document.getElementById("info").innerHTML = '<a href="?' + source + pageno + '">'+'https://www.ddbredirecter.com/redirecter/?'+source+pageno+'</a>';
                     }
                 }
             }
@@ -1540,7 +1550,8 @@
                         <option value="XGTE">XGTE</option>
                     </select>
                     <input type="number" min="1" max="999" name="page">
-                    <button type="submit">Go!</button>
+                    <button name="type" value="go" type="submit">Go!</button>
+                    <button name="type" value="url" type="submit">Show URL</button>
                 </form>
             </div>
             
@@ -1557,7 +1568,7 @@
         
             <h2>How do I use it?</h2>
             <p>Add the source book acronym and page number to this page's URL. For instance, if you want to go to Player's Handbook page 256, add <a href="?PHB256">?PHB256</a>
-                at the end of the URL. Or use the form above! It will do the same thing, but the URL is formatted as <a href="?source=PHB&page=256">?source=PHB&page=256.</a></p>
+                at the end of the URL. Or use the form above!</p>
 
             <blockquote><h5>Notes on PHB</h5>In the physical book, the section on Weapon describes the weapon properties and is followed with a table 
                 showing the common weapons. On DDB these are the other way around, so the content flow is slightly different.<br/>The pages following are on Adventuring Gear, and 
