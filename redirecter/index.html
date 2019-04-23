@@ -43,7 +43,7 @@
                     }
 
                     //Did we get a page number? If so, what source?
-                    if (isFinite(pageno) && redirect) {
+                    if (isFinite(pageno)) {
                         source = source.toUpperCase();
                         switch (source) {
                             case 'PHB':
@@ -68,13 +68,15 @@
                     }
 
                     //If we got an URL, redirect to it
-                    if (ddb_url != null)
-                        window.location.assign(ddb_url);
-                    else {
+                    if (ddb_url != null) {
+                        if (redirect)
+                            window.location.assign(ddb_url);
+                        else {
+                            document.getElementById("content").style.display = "block";
+                            document.getElementById("info").innerHTML = '<a href="?' + source + pageno + '">'+'https://www.ddbredirecter.com/redirecter/?'+source+pageno+'</a> will take you <a href="' + ddb_url + '">here</a>';
+                        }
+                    } else {
                         document.getElementById("content").style.display = "block";
-
-                        if (!redirect)
-                            document.getElementById("info").innerHTML = '<a href="?' + source + pageno + '">'+'https://www.ddbredirecter.com/redirecter/?'+source+pageno+'</a>';
                     }
                 }
             }
