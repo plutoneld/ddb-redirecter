@@ -10,7 +10,7 @@
 	B = Breadcrumbs in Compendiums
 	D = Dark mode
 
-	R = Reset all
+	R = Reading mode
 */
 
 //Set session storage variables to control show/hide for elements between page changes
@@ -26,6 +26,8 @@ if (sessionStorage.darkmode === null)
 	sessionStorage.darkmode = "no";
 if (sessionStorage.sidebar === null)
 	sessionStorage.sidebar = "no";
+if (sessionStorage.readingmode === null)
+	sessionStorage.readingmode = "no";
 	
 //Window size variable, used to control CSS media rules
 var x = window.matchMedia("screen and (max-width: 1023px)");
@@ -37,12 +39,7 @@ if (typeof document.getElementsByClassName("b-breadcrumb")[0] !== 'undefined') {
 } 
 
 // Set states
-darkMode(false);
-siteBar(false);
-footer(false);
-megaMenus(false);
-breadcrumbs(false);
-sideBar(false);
+setStates();
 
 /* Add key press listener to the document */
 document.addEventListener("keypress", toggleElems);
@@ -80,22 +77,48 @@ function toggleElems(myKeyEvent){
 			break;
 		case "r":
 		case "R":
-			reset();
+			readingMode(true);
 			break;
 		case "h":
 		case "H":
-			alert("Site options (R = Reset)\nS: Toggle Site bar at the top\nM: Toogle Site Menu\nF: Toggle Footer\n\nCompendium options\nB: Toggle Breadcrumbs\nT: Toggle Sidebar Menu\nD: Toggle dark mode");
+			alert("R = Toggle Reading mode (hide/show all)\n* Site options\nS: Toggle Site bar at the top\nM: Toogle Site Menu\nF: Toggle Footer\n* Compendium options\nB: Toggle Breadcrumbs\nT: Toggle Sidebar Menu\nD: Toggle dark mode");
 			break;
 	}
 }
 
-function reset() {
-	sessionStorage.sitebar = "yes";
-	sessionStorage.menus = "yes";
-	sessionStorage.breadcrumbs = "yes";
-	sessionStorage.footer = "yes";
-	sessionStorage.darkmode = "no";
-	sessionStorage.sidebar = "yes";
+function setStates() {
+	darkMode(false);
+	siteBar(false);
+	footer(false);
+	megaMenus(false);
+	breadcrumbs(false);
+	sideBar(false);
+}
+
+function readingMode(toggle) {
+	if (toggle)
+		if (sessionStorage.readingmode == "no")
+			sessionStorage.readingmode = "yes";
+		else
+			sessionStorage.readingmode = "no";
+
+	if (sessionStorage.readingmode == "yes") {
+		sessionStorage.sitebar = "no";
+		sessionStorage.menus = "no";
+		sessionStorage.breadcrumbs = "no";
+		sessionStorage.footer = "no";
+		sessionStorage.darkmode = "no";
+		sessionStorage.sidebar = "no";
+	} else {
+		sessionStorage.sitebar = "yes";
+		sessionStorage.menus = "yes";
+		sessionStorage.breadcrumbs = "yes";
+		sessionStorage.footer = "yes";
+		sessionStorage.darkmode = "no";
+		sessionStorage.sidebar = "yes";
+	}
+
+	setStates();
 }
 
 function sideBar(toggle) {
