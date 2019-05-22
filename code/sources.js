@@ -2,12 +2,15 @@
 
 /*
 	Toggle different elements by pressing the keys below:
-	S = Sitebar
-	M = Menus
-	B = Breadcrumbs in Compendiums
+	S = Site bar at the top
+	M = Site Menus
 	F = Footer
+
+	T = Sidebar Menu
+	B = Breadcrumbs in Compendiums
 	D = Dark mode
 
+	R = Reset all
 */
 
 //Set session storage variables to control show/hide for elements between page changes
@@ -21,13 +24,15 @@ if (sessionStorage.footer === null)
 	sessionStorage.footer = "no";
 if (sessionStorage.darkmode === null)
 	sessionStorage.darkmode = "no";
+if (sessionStorage.sidebar === null)
+	sessionStorage.sidebar = "no";
 	
 //Window size variable, used to control CSS media rules
 var x = window.matchMedia("screen and (max-width: 1023px)");
 
 // Check if breadcrumbs are available on current page and set state
 var breadcrumbsOnPage = false;
-if (!(typeof document.getElementsByClassName("b-breadcrumb")[0] === 'undefined')) {
+if (typeof document.getElementsByClassName("b-breadcrumb")[0] !== 'undefined') {
 	breadcrumbsOnPage = true;
 } 
 
@@ -37,6 +42,7 @@ siteBar(false);
 footer(false);
 megaMenus(false);
 breadcrumbs(false);
+sideBar(false);
 
 /* Add key press listener to the document */
 document.addEventListener("keypress", toggleElems);
@@ -68,10 +74,41 @@ function toggleElems(myKeyEvent){
 		case "D":
 			darkMode(true);
 			break;
+		case "t":
+		case "T":
+			sideBar(true);
+			break;
+		case "r":
+		case "R":
+			reset();
+			break;
 		case "h":
 		case "H":
-			alert("S: Toggle Site bar\nM: Toogle Menu\nB: Toggle Breadcrumbs\nF: Toggle Footer\nD: Toggle dark mode");
+			alert("Site options (R = Reset)\nS: Toggle Site bar at the top\nM: Toogle Site Menu\nF: Toggle Footer\n\nCompendium options\nB: Toggle Breadcrumbs\nT: Toggle Sidebar Menu\nD: Toggle dark mode");
 			break;
+	}
+}
+
+function reset() {
+	sessionStorage.sitebar = "yes";
+	sessionStorage.menus = "yes";
+	sessionStorage.breadcrumbs = "yes";
+	sessionStorage.footer = "yes";
+	sessionStorage.darkmode = "no";
+	sessionStorage.sidebar = "yes";
+}
+
+function sideBar(toggle) {
+	if (toggle)
+		if (sessionStorage.sidebar == "no")
+			sessionStorage.sidebar= "yes";
+		else
+			sessionStorage.sidebar = "no";
+
+	if (sessionStorage.sidebar == "yes") {
+		document.getElementsByClassName("sidebar-menu")[0].style.display = "block";
+	} else {
+		document.getElementsByClassName("sidebar-menu")[0].style.display = "none";
 	}
 }
 
@@ -123,7 +160,7 @@ function siteBar(toggle) {
 		else
 			sessionStorage.sitebar = "no";
 
-	if (sessionStorage.sitebar == "no") {
+	if (sessionStorage.sitebar == "yes") {
 		document.getElementsByClassName("site-bar")[0].style.display = "block";
 		if (x.matches) {
 			document.getElementsByTagName("header")[0].style.display = "block";
@@ -142,7 +179,7 @@ function darkMode(toggle) {
 		else
 			sessionStorage.darkmode = "no";
 			
-	if (sessionStorage.darkmode == "no") {
+	if (sessionStorage.darkmode == "yes") {
 		document.getElementsByTagName("body")[0].style.backgroundColor = "black";
 		document.getElementById("site-main").style.backgroundColor = "black";
 		document.getElementById("content").style.color = "grey";
@@ -179,15 +216,15 @@ function miniToC() {
 			case 'vgtm':
 				search_for_headings = "h2";
 				break;
-			case 'xgte':
-				search_for_headings = "h3";
-				break;
 			case 'basic-rules':
 			case 'mm':
 			case 'ggtr':
 			case 'mtof':
 			case 'wgte':
 				search_for_headings = "h4";
+				break;
+			default:
+				search_for_headings = "h3";
 				break;
 		}
 		
@@ -198,7 +235,7 @@ function miniToC() {
 			if (link.length > 0)
 				sessionStorage.minitoc = sessionStorage.minitoc + '<a href="' + link[0].href + '">' + link[0].innerHTML + '</a>';
 		}
-	} else if (path_pieces.length > 3 && typeof(sessionStorage.minitoc) != 'undefined') {
+	} else if (path_pieces.length > 3 && typeof(sessionStorage.minitoc) !== 'undefined') {
 		document.getElementById("footer-push").innerHTML = '<div class="dropdown"><button class="dropbtn">mini ToC</button><div class="dropdown-content">' + sessionStorage.minitoc + '</div></div>';
 	}
 }
