@@ -230,6 +230,7 @@ function miniToC() {
 	
 	//Check to see if where on a ToC
 	if (path_pieces.length == 3) {
+		var link_array = [];
 		sessionStorage.minitoc = '';
 		
 		switch (path_pieces[2]) {
@@ -256,11 +257,32 @@ function miniToC() {
 		for (var i = 0; i < link_headings.length;i++) {
 			var link = link_headings[i].getElementsByTagName("a");
 			if (link.length > 0)
-				sessionStorage.minitoc = sessionStorage.minitoc + '<a href="' + link[0].href + '">' + link[0].innerHTML + '</a>';
+				link_array.push('<a href="' + link[0].href + '">' + link[0].innerHTML + '</a>');
 		}
+
+		sessionStorage.minitoc = JSON.stringify(link_array);
 	} else if (path_pieces.length > 3 && typeof(sessionStorage.minitoc) !== 'undefined') {
-		document.getElementById("footer-push").innerHTML = '<div class="dropdown"><button class="dropbtn">mini ToC</button><div class="dropdown-content">' + sessionStorage.minitoc + '</div></div>';
+		var links = JSON.parse(sessionStorage.minitoc);
+		var cur_path = window.location.pathname.split('/');
+		cur_path = cur_path[cur_path.length-1];
+		var index_cur_path = 0;
+
+		for (var li = 0;li < links.length;li++) {
+			if (links[li].indexOf(cur_path) != -1) {
+				index_cur_path = li;
+				break;
+			}
+		}
+
+		document.getElementById("footer-push").innerHTML = '<div class="toclinks"><--- ' + (typeof(links[index_cur_path - 1]) !== 'undefined' ? links[index_cur_path - 1] : links[links.length - 1]) + '</div><div class="dropdown"><button class="dropbtn">mini ToC</button><div class="dropdown-content">' + links.join("") + '</div></div><div class="toclinks">' + (typeof(links[index_cur_path + 1]) !== 'undefined' ? links[index_cur_path + 1] : links[0])  + ' ---></div>';
 	}
+}
+
+function getNearbySections() {
+	var cur_url = window.location.pathname;
+	var path_pieces = cur_url.split('/');
+
+	
 }
 
 /* Change top padding when responsive design active */
