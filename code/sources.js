@@ -129,9 +129,9 @@ function sideBar(toggle) {
 			sessionStorage.sidebar = "no";
 
 	if (sessionStorage.sidebar == "yes") {
-		document.getElementsByClassName("sidebar-menu")[0].style.display = "block";
+		document.getElementsByClassName("sidebar-menu")[0].style.visibility = "visible";
 	} else {
-		document.getElementsByClassName("sidebar-menu")[0].style.display = "none";
+		document.getElementsByClassName("sidebar-menu")[0].style.visibility = "hidden";
 	}
 }
 
@@ -276,13 +276,6 @@ function miniToC() {
 
 		document.getElementById("footer-push").innerHTML = '<div class="toclinks"><--- ' + (typeof(links[index_cur_path - 1]) !== 'undefined' ? links[index_cur_path - 1] : links[links.length - 1]) + '</div><div class="dropdown"><button class="dropbtn">mini ToC</button><div class="dropdown-content">' + links.join("") + '</div></div><div class="toclinks">' + (typeof(links[index_cur_path + 1]) !== 'undefined' ? links[index_cur_path + 1] : links[0])  + ' ---></div>';
 	}
-}
-
-function getNearbySections() {
-	var cur_url = window.location.pathname;
-	var path_pieces = cur_url.split('/');
-
-	
 }
 
 /* Change top padding when responsive design active */
