@@ -32,12 +32,6 @@ if (sessionStorage.readingmode === null)
 //Window size variable, used to control CSS media rules
 var x = window.matchMedia("screen and (max-width: 1023px)");
 
-// Check if breadcrumbs are available on current page and set state
-var breadcrumbsOnPage = false;
-if (typeof document.getElementsByClassName("b-breadcrumb")[0] !== 'undefined') {
-	breadcrumbsOnPage = true;
-} 
-
 // Set states
 setStates();
 
@@ -127,12 +121,13 @@ function sideBar(toggle) {
 			sessionStorage.sidebar= "yes";
 		else
 			sessionStorage.sidebar = "no";
-
-	if (sessionStorage.sidebar == "yes") {
-		document.getElementsByClassName("sidebar-menu")[0].style.visibility = "visible";
-	} else {
-		document.getElementsByClassName("sidebar-menu")[0].style.visibility = "hidden";
-	}
+			
+	if (document.getElementsByClassName("sidebar-menu").length > 0)
+		if (sessionStorage.sidebar == "yes") {
+			document.getElementsByClassName("sidebar-menu")[0].style.visibility = "visible";
+		} else {
+			document.getElementsByClassName("sidebar-menu")[0].style.visibility = "hidden";
+		}
 }
 
 function breadcrumbs(toggle) {
@@ -142,7 +137,7 @@ function breadcrumbs(toggle) {
 		else
 			sessionStorage.breadcrumbs = "no";	
 			
-	if (breadcrumbsOnPage)
+	if (document.getElementsByClassName("b-breadcrumb").length > 0)
 		if (sessionStorage.breadcrumbs == "yes") {
 			document.getElementsByClassName("b-breadcrumb")[0].style.display = "block";
 		} else {
@@ -157,10 +152,11 @@ function megaMenus(toggle) {
 		else
 			sessionStorage.menus = "no";
 			
-	if (sessionStorage.menus == "yes")
-		document.getElementById("mega-menu-target").style.display = "block";
-	else
-		document.getElementById("mega-menu-target").style.display = "none";
+	if (document.getElementById("mega-menu-target") !== "undefined")
+		if (sessionStorage.menus == "yes")
+			document.getElementById("mega-menu-target").style.display = "block";
+		else
+			document.getElementById("mega-menu-target").style.display = "none";
 }
 
 function footer(toggle) {
@@ -170,10 +166,11 @@ function footer(toggle) {
 		else
 			sessionStorage.footer = "no";
 			
-	if (sessionStorage.footer == "yes")
-		document.getElementsByClassName("ddb-footer")[0].style.display = "flex";
-	else
-		document.getElementsByClassName("ddb-footer")[0].style.display = "none";
+	if (document.getElementsByClassName("ddb-footer").length > 0)
+		if (sessionStorage.footer == "yes")
+			document.getElementsByClassName("ddb-footer")[0].style.display = "flex";
+		else
+			document.getElementsByClassName("ddb-footer")[0].style.display = "none";
 }
 
 function siteBar(toggle) {
@@ -183,16 +180,17 @@ function siteBar(toggle) {
 		else
 			sessionStorage.sitebar = "no";
 
-	if (sessionStorage.sitebar == "yes") {
-		document.getElementsByClassName("site-bar")[0].style.display = "block";
-		if (x.matches) {
-			document.getElementsByTagName("header")[0].style.display = "block";
-			document.getElementById("site-main").style.paddingTop = "47px";
+	if (document.getElementsByClassName("site-bar").length > 0)
+		if (sessionStorage.sitebar == "yes") {
+			document.getElementsByClassName("site-bar")[0].style.display = "block";
+			if (x.matches) {
+				document.getElementsByTagName("header")[0].style.display = "block";
+				document.getElementById("site-main").style.paddingTop = "47px";
+			}
+		} else {
+			document.getElementsByClassName("site-bar")[0].style.display = "none";
+			changeMobileMenuFunction(x);
 		}
-	} else {
-		document.getElementsByClassName("site-bar")[0].style.display = "none";
-		changeMobileMenuFunction(x);
-	}
 }
 
 function darkMode(toggle) {
