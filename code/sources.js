@@ -290,4 +290,3 @@ function changeMobileMenuFunction(x) {
 
 changeMobileMenuFunction(x);
 x.addListener(changeMobileMenuFunction);
-miniToC();
