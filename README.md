@@ -1,4 +1,7 @@
-# Minimalistic D&D Beyond
+# DDB Redirecter
+The redirecter can be found here [https://plutoneld.github.io/minimalist-ddb/redirecter/](https://plutoneld.github.io/minimalist-ddb/redirecter/)
+
+## (ARCHIVED) Minimalistic D&D Beyond
 Using the instructions, you can have a minimalistic experience of the D&amp;D Beyond website and the digital 5e compendiums.
 
 There's also instructions for getting a minimalistic experience using your current Chrome browser (either on PC/Mac or Chrome OS).
